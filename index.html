@@ -1,0 +1,823 @@
+
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>FNW ASSESSORIA DIGITAL - Universidade Corporativa (Clone)</title>
+	<link href="//www.sie.com.br/css/estilo.css?v33" rel="stylesheet" type="text/css" />
+	<link href="//www.sie.com.br/css/fontes/fontface.css" type="text/css" rel="stylesheet"  />
+	<!-- Excluído: jquery.fancybox.css -->
+	<!-- Excluído: Google Analytics -->
+
+    <style>
+        /* Estilos Gerais */
+        body {
+            font-family: sans-serif; /* Fonte mais padrão */
+        }
+        * { box-sizing: border-box; }
+
+        /* Botões Padrão */
+        button, input[type="submit"], input[type="button"] {
+            cursor: pointer;
+            padding: 8px 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background-color: #f0f0f0;
+            font-size: 0.95em;
+            transition: background-color 0.2s ease, border-color 0.2s ease;
+        }
+        button:hover, input[type="submit"]:hover, input[type="button"]:hover {
+            background-color: #e0e0e0;
+            border-color: #bbb;
+        }
+        button:disabled, input[type="submit"]:disabled, input[type="button"]:disabled {
+             cursor: not-allowed;
+             opacity: 0.6;
+        }
+
+        /* Botões Específicos */
+        #adminButton {
+            background: #fff;
+            border: 1px solid #aaa;
+            padding: 4px 8px;
+        }
+        #myCoursesButton {
+            background-color: #4CAF50; /* Verde */
+            color: white;
+            border: none;
+        }
+        #myCoursesButton:hover {
+            background-color: #45a049;
+        }
+        #closeCoursePlayerButton {
+             /* Estilos base definidos aqui */
+             background-color: rgba(0,0,0,0.7);
+             color: white;
+             border: 1px solid white;
+             padding: 5px 10px;
+             font-size: 0.9em;
+             border-radius: 3px;
+             z-index: 1001;
+        }
+        #closeCoursePlayerButton:hover {
+             background-color: rgba(0,0,0,0.9);
+        }
+
+        /* Seções Principais */
+        #myCoursesSection, 
+        #adminSection {
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 20px;
+            margin: 20px auto; /* Centralizado com margem superior/inferior */
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            width: 1800px !important; /* Forçando largura 1800px */
+            max-width: 95% !important; /* Forçando max-width */
+        }
+        /* Largura específica para admin não mais necessária se for 1300px */
+        /* #adminSection { width: 900px; } */ 
+
+        #coursePlayerContainer {
+             border-radius: 5px;
+             overflow: hidden; 
+             box-shadow: 0 3px 7px rgba(0,0,0,0.2);
+             position: relative; 
+             margin: 20px auto; /* Centralizado */
+             background-color: #000; /* Fundo preto */
+             width: 1800px !important; /* Forçando largura 1800px */
+             max-width: 95% !important; /* Forçando max-width */
+             height: 1000px; /* Altura ajustada para 1000px */
+             padding: 0; /* Player não tem padding interno */
+        }
+
+        /* Inputs de Texto */
+        .text-input {
+            padding: 8px 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1em;
+            margin-bottom: 5px; 
+        }
+
+        /* Links */
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+
+    </style>
+</head>
+
+<body style="background-image:url(https://www.sie.com.br/admin/_upload/2021/12/24/29220/680177bfb8adc.png);background-size:cover;">
+
+<div id="header">
+	<div class="in" style="position: relative; min-height: 60px;">
+    	<div id="logo" style="margin-right: 10px;">
+        	<a href="https://www.sie.com.br/fnw-assessoria-digital">
+			<img src="https://www.sie.com.br/admin/_upload/2021/12/24/29220/68013566b85ef.png" alt="FNW ASSESSORIA DIGITAL" style="max-height:40px; display: block;" />
+			</a>
+        </div>
+        <!-- Ícone de Engrenagem Admin (Absoluto, oculto) -->
+        <span id="gearIcon" style="position: absolute; top: 25px; left: -60px; display: none; font-size: 1.5em; cursor: pointer;">⚙️</span>
+
+        <div id="login">
+            <div id="login-enter">
+			  	<div id="login-form" style="float: left; margin-right: 10px;">
+					<form action="https://ava.sie.com.br/" method="post" id="frmLogin" target="_blank">
+						<input type="hidden" name="empresa" value="29220" />
+						<div style="width:140px;float:left;margin-right:30px;">
+							<label>E-mail ou CPF:</label>
+							<input autocomplete="username" class="text-input" name="email" type="text" id="email_id" size="20" required/>
+						</div>
+						<div style="width:230px;float:left;">
+							<label>Senha:</label>
+							<input autocomplete="current-password" class="text-input" name="pass" type="password" id="senha_id" size="20" style="float:left;margin-right:5px;" required/>
+							<button type="submit" style="float:left;">Enviar</button>
+							<br style="clear:both;" />
+							<a href="https://www.sie.com.br/email/" id="senha" style="font-size:12px;color:#666; display: block; margin-top: 5px;">Esqueceu a senha?</a>
+						</div>
+						<div style="clear: both;"></div>
+					</form>
+				</div>
+				<div id="login-card" style="float: left; margin-right: 10px;">
+                	<form action="/cartao/" method="POST" target="_blank">
+						<div style="width:230px;float:left;">
+							<label>Código de Acesso</label>
+							<input required class="text-input" name="card_number" id="cartao_id" type="text" maxlength="20" size="20" style="float:left;margin-right:5px;"/>
+							<button type="submit" style="float:left;">Enviar</button>
+							<br style="clear:both;" />
+							<small style="font-size:12px;color:#666; display: block; margin-top: 5px;">Informe código de resgate</small>
+					  	</div>
+					  	<div style="clear: both;"></div>
+					</form>
+				</div>
+				<!-- Botão Meus Cursos (agora estilizado via CSS) -->
+				<button id="myCoursesButton" type="button" style="display: none; margin-left: 10px;">Meus Cursos</button>
+			</div>
+		</div>
+
+		<!-- Botão Admin (agora parcialmente estilizado via CSS) -->
+		<button id="adminButton" type="button" style="position: absolute; top: 35px; right: -30px; display: none; cursor:pointer; padding: 4px 4px;">Admin</button>
+
+	</div>
+</div>
+
+<!-- Seção Meus Cursos (agora estilizada via CSS) -->
+<div id="myCoursesSection" style="display: none; margin: 20px auto; max-width: 90%; width: 900px;">
+    <h2>Meus Cursos</h2>
+    <div id="myCoursesContainer">
+        <!-- Lista de cursos será carregada aqui -->
+    </div>
+</div>
+
+<!-- Seção Player do Curso (agora estilizada via CSS) -->
+<div id="coursePlayerContainer" style="display: none; padding: 0; margin: 20px auto; background-color: #000; max-width: 90%; width: 900px; height: 600px;">
+    <button id="closeCoursePlayerButton" style="position: absolute; top: 5px; right: 5px; z-index: 10; cursor: pointer; ">X</button>
+    <!-- Iframe do curso será carregado aqui -->
+</div>
+
+<!-- Seção Admin (agora estilizada via CSS) -->
+<div id="adminSection" style="display: none; margin: 20px auto; max-width: 90%; width: 800px;">
+	<h2>Área Administrativa</h2>
+    <div style="margin-bottom: 15px;"> <!-- Container para botões admin -->
+        <button id="fetchTrailsButton" type="button" style="margin-right: 10px;">Obter Trilhas</button>
+        <button id="createTrailButton" type="button" style="margin-right: 10px;">Criar Trilha</button>
+        <button id="fetchEbooksButton" type="button" style="margin-right: 10px;">Obter eBooks</button>
+        <button id="refreshAdminButton" type="button" title="Atualizar dados carregados">Atualizar</button>
+    </div>
+
+    <!-- Campo de Busca por Curso nas Trilhas (inicialmente oculto) -->
+    <div id="trailSearchContainer" style="margin-bottom: 15px; display: none;">
+        <input type="text" id="trailCourseSearchInput" placeholder="Buscar curso em trilhas..." class="text-input" style="width: 50%; padding: 8px 10px;">
+    </div>
+
+	<!-- Formulário para Criar Trilha (ajustar estilo se necessário) -->
+	<div id="createTrailFormContainer" style="display: none; margin-top: 15px; padding: 15px; border: 1px solid #ccc; background-color: #e9e9e9;">
+		<h4>Nova Trilha</h4>
+		<div style="margin-bottom: 10px;">
+			<label for="newTrailTitle" style="display: block; margin-bottom: 5px;">Título:</label>
+			<input type="text" id="newTrailTitle" name="newTrailTitle" style="width: 95%; padding: 5px;" required>
+		</div>
+		<div style="margin-bottom: 10px;">
+			<label for="newTrailCourses" style="display: block; margin-bottom: 5px;">IDs dos Cursos (separados por vírgula):</label>
+			<input type="text" id="newTrailCourses" name="newTrailCourses" style="width: 95%; padding: 5px;" placeholder="Ex: 864,1260,2458" required>
+		</div>
+		<button id="saveTrailButton" type="button">Salvar Trilha</button>
+	</div>
+
+	<div id="trailsContainer" style="margin-top: 15px;">
+		<!-- Conteúdo das trilhas será carregado aqui -->
+	</div>
+
+	<!-- Container para eBooks -->
+	<div id="ebooksContainer" style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #ccc;">
+		<!-- Conteúdo dos eBooks será carregado aqui -->
+	</div>
+</div>
+
+<div id="footer">
+	<div style="text-align:center;font-size:12px;font-family:sans-serif;"><a id="ico-politica" href="javascript:;" style="color:#666">Política de Privacidade</a></div>
+	<!-- Excluído: Div #politica-de-priv -->
+</div>
+
+<!-- Excluídos: Scripts JQuery, Fancybox, MaskedInput, page.js, Cloudflare -->
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const loginForm = document.getElementById('frmLogin');
+    const emailInput = document.getElementById('email_id');
+    const passwordInput = document.getElementById('senha_id');
+    const adminButton = document.getElementById('adminButton');
+    const adminSection = document.getElementById('adminSection');
+    const gearIcon = document.getElementById('gearIcon');
+    const fetchTrailsButton = document.getElementById('fetchTrailsButton');
+    const trailsContainer = document.getElementById('trailsContainer');
+    const createTrailButton = document.getElementById('createTrailButton');
+    const createTrailFormContainer = document.getElementById('createTrailFormContainer');
+    const newTrailTitleInput = document.getElementById('newTrailTitle');
+    const newTrailCoursesInput = document.getElementById('newTrailCourses');
+    const saveTrailButton = document.getElementById('saveTrailButton');
+    const fetchEbooksButton = document.getElementById('fetchEbooksButton');
+    const ebooksContainer = document.getElementById('ebooksContainer');
+    const refreshAdminButton = document.getElementById('refreshAdminButton');
+    const myCoursesButton = document.getElementById('myCoursesButton');
+    const myCoursesSection = document.getElementById('myCoursesSection');
+    const myCoursesContainer = document.getElementById('myCoursesContainer');
+    const coursePlayerContainer = document.getElementById('coursePlayerContainer');
+    const loginCardDiv = document.getElementById('login-card');
+    const closeCoursePlayerButton = document.getElementById('closeCoursePlayerButton');
+    const trailSearchContainer = document.getElementById('trailSearchContainer'); // Referência para o container da busca
+
+    const apiToken = '6a2f35f5b59eee441a72b515f83271bbf85ef3d4';
+    const loginApiUrl = 'https://www.iped.com.br/api/user/login';
+    const trailsApiUrl = 'https://www.iped.com.br/api/trail/get-trails';
+    const setTrailApiUrl = 'https://www.iped.com.br/api/trail/set-trail';
+    const ebooksApiUrl = 'https://www.iped.com.br/api/ebook/get-ebooks';
+    const courseInProgressApiUrl = 'https://www.iped.com.br/api/course/get-inprogress';
+    const courseEnvApiUrl = 'https://www.iped.com.br/api/course/get-environment';
+
+    let loggedInUserId = null;
+    let loggedInUserToken = null;
+    let currentTrailsData = []; // Guarda os dados das trilhas carregadas
+
+    // Lista de e-mails autorizados para ver os controles de admin
+    const authorizedAdminEmails = [
+        'sobral.pessoal@gmail.com'
+    ].map(email => email.toLowerCase()); // Normaliza para minúsculas
+
+    // Função para RENDERIZAR as trilhas no container
+    function renderTrails(trailsArray) {
+        let trailsHtml = '';
+        if (!trailsArray || trailsArray.length === 0) {
+            trailsHtml = '<p>Nenhuma trilha encontrada (ou correspondente ao filtro).</p>';
+        } else {
+            trailsArray.forEach(trail => {
+                const trailId = trail.trail_id;
+                // Lógica de geração do HTML da trilha (copiada/movida de fetchAndDisplayTrails)
+                trailsHtml += `
+                    <div class="trail-item" style="border: 1px solid #ddd; padding: 10px; margin-bottom: 10px; background: #fff;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; cursor: pointer;" class="toggle-details" data-trail-id="${trailId}">
+                            <h4>${trail.trail_title || 'Trilha sem título'}</h4>
+                            <span class="toggle-icon" style="font-size: 1.2em;">▼</span>
+                        </div>
+                        <div class="trail-details" id="details-${trailId}" style="display: none; margin-top: 10px; padding-top: 10px; border-top: 1px dashed #eee;">
+                            <p><strong>Objetivo:</strong> ${trail.trail_objective || 'N/A'}</p>
+                            <p><strong>Prazo:</strong> ${trail.trail_conclusion_date || 'N/A'}</p>
+                            ${trail.trail_conclusion_message ? `<p><strong>Mensagem:</strong> ${trail.trail_conclusion_message}</p>` : ''}
+                            <div class="courses-list" style="margin-top: 10px;">
+                                <h5>Cursos:</h5>
+                `;
+                if (trail.trail_courses && trail.trail_courses.length > 0) {
+                    trailsHtml += '<ul>';
+                    trail.trail_courses.forEach(course => {
+                        const courseTitle = course.course_title || `Curso ID ${course.course_id || 'Desconhecido'}`;
+                        const availability = course.course_trail_available === 1 ? 'Disponível' : 'Indisponível';
+                        const message = course.course_trail_message ? `(${course.course_trail_message})` : '';
+                        trailsHtml += `
+                            <li class="course-item" data-course-id="${course.course_id}" style="cursor: pointer; margin-bottom: 3px;">
+                                ${courseTitle} - ${availability} ${message}
+                            </li>
+                        `;
+                    });
+                    trailsHtml += '</ul>';
+                } else {
+                    trailsHtml += '<p>Nenhum curso nesta trilha.</p>';
+                }
+                trailsHtml += '</div></div></div>'; 
+            });
+        }
+        trailsContainer.innerHTML = trailsHtml;
+        // Nota: Poderíamos re-aplicar listeners específicos aqui se necessário, mas o delegado deve funcionar.
+    }
+
+    // Função para buscar e exibir as trilhas (agora controla visibilidade da busca)
+    async function fetchAndDisplayTrails() {
+        if (!loggedInUserId) {
+            trailsContainer.innerHTML = '<p>Erro: Usuário não logado.</p>';
+            currentTrailsData = [];
+            renderTrails(currentTrailsData);
+            trailSearchContainer.style.display = 'none'; // Esconde busca no erro
+            return;
+        }
+
+        trailsContainer.innerHTML = '<p>Carregando trilhas...</p>';
+        trailsContainer.style.display = 'block';
+        trailSearchContainer.style.display = 'none'; // Esconde busca enquanto carrega
+
+        const formData = new FormData();
+        formData.append('token', apiToken);
+        formData.append('user_id', loggedInUserId);
+
+        try {
+            const response = await fetch(trailsApiUrl, {
+                method: 'POST',
+                body: formData
+            });
+            if (!response.ok) throw new Error(`Erro HTTP: ${response.status}`);
+            const result = await response.json();
+
+            if (result.STATE === 1 && result.TRAILS) {
+                currentTrailsData = result.TRAILS;
+                document.getElementById('trailCourseSearchInput').value = '';
+                renderTrails(currentTrailsData);
+                trailSearchContainer.style.display = 'block'; // MOSTRA busca se sucesso
+            } else if (result.STATE === 0 && result.ERROR) {
+                trailsContainer.innerHTML = `<p>Erro ao buscar trilhas: ${result.ERROR}</p>`;
+                currentTrailsData = [];
+                trailSearchContainer.style.display = 'none'; // Esconde busca no erro
+            } else {
+                trailsContainer.innerHTML = '<p>Erro inesperado ao buscar trilhas.</p>';
+                console.error('Resposta inesperada da API de trilhas:', result);
+                currentTrailsData = [];
+                trailSearchContainer.style.display = 'none'; // Esconde busca no erro
+            }
+        } catch (error) {
+            trailsContainer.innerHTML = `<p>Falha ao conectar com a API de trilhas: ${error.message}</p>`;
+            console.error('Erro na chamada da API de trilhas:', error);
+            currentTrailsData = [];
+            trailSearchContainer.style.display = 'none'; // Esconde busca no erro
+        }
+    }
+
+    // Função para criar a trilha
+    async function createTrail() {
+        const title = newTrailTitleInput.value.trim();
+        const courses = newTrailCoursesInput.value.trim();
+
+        if (!title || !courses) {
+            alert('Por favor, preencha o título e os IDs dos cursos.');
+            return;
+        }
+
+        if (!loggedInUserId || !loggedInUserToken) {
+            alert('Erro: Informações do usuário logado não encontradas. Faça login novamente.');
+            return;
+        }
+
+        // Simples validação para IDs de cursos (apenas verifica se não está vazio e contém números/vírgulas)
+        if (!/^[\d,]+$/.test(courses)) {
+             alert('Formato inválido para IDs dos Cursos. Use apenas números separados por vírgula.');
+             return;
+        }
+
+        saveTrailButton.disabled = true;
+        saveTrailButton.textContent = 'Salvando...';
+
+        const formData = new FormData();
+        formData.append('token', apiToken);
+        formData.append('user_id', loggedInUserId);
+        formData.append('user_token', loggedInUserToken);
+        formData.append('title', title);
+        formData.append('courses', courses);
+
+        try {
+            const response = await fetch(setTrailApiUrl, {
+                method: 'POST',
+                body: formData
+            });
+            if (!response.ok) throw new Error(`Erro HTTP: ${response.status}`);
+            const result = await response.json();
+
+            if (result.STATE === 1 && result.SUCCESS) {
+                alert(result.SUCCESS);
+                createTrailFormContainer.style.display = 'none';
+                newTrailTitleInput.value = '';
+                newTrailCoursesInput.value = '';
+                fetchAndDisplayTrails();
+            } else if (result.STATE === 0 && result.ERROR) {
+                alert(`Erro ao criar trilha: ${result.ERROR}`);
+            } else {
+                alert('Erro inesperado ao criar trilha.');
+                console.error('Resposta inesperada da API set-trail:', result);
+            }
+        } catch (error) {
+            alert(`Falha ao conectar com a API para criar trilha: ${error.message}`);
+            console.error('Erro na chamada da API set-trail:', error);
+        } finally {
+            saveTrailButton.disabled = false;
+            saveTrailButton.textContent = 'Salvar Trilha';
+        }
+    }
+
+    // Função para buscar e exibir os eBooks
+    async function fetchAndDisplayEbooks() {
+        // Restaurado: Validação de login
+        if (!loggedInUserId || !loggedInUserToken) {
+            ebooksContainer.innerHTML = '<p>Erro: Usuário não logado.</p>';
+            return;
+        }
+
+        ebooksContainer.innerHTML = '<p>Carregando eBooks...</p>'; // Mensagem original restaurada
+        ebooksContainer.style.display = 'block'; // Garante visibilidade ao carregar/erro
+
+        // Restaurado: Código Original da API
+        const formData = new FormData();
+        formData.append('token', apiToken);
+        formData.append('user_id', loggedInUserId);
+        formData.append('user_token', loggedInUserToken);
+
+        try {
+            const response = await fetch(ebooksApiUrl, {
+                method: 'POST',
+                body: formData
+            });
+            if (!response.ok) throw new Error(`Erro HTTP: ${response.status}`);
+            const result = await response.json();
+
+            if (result.STATE === 1 && result.EBOOKS) {
+                let ebooksHtml = '<h4>eBooks Disponíveis</h4>';
+                if (result.EBOOKS.length === 0) {
+                    ebooksHtml += '<p>Nenhum eBook encontrado.</p>'; // Mensagem se a lista estiver vazia
+                } else {
+                    ebooksHtml += '<ul>';
+                    result.EBOOKS.forEach(ebook => {
+                        ebooksHtml += `
+                            <li>
+                                <strong>${ebook.ebook_title || 'eBook sem título'}</strong>
+                                ${ebook.ebook_url ? `<a href="${ebook.ebook_url}" target="_blank" style="margin-left: 10px;">(Acessar)</a>` : ''}
+                                ${ebook.ebook_description ? `<p style="font-size: 0.9em; margin-left: 15px;">${ebook.ebook_description}</p>` : ''}
+                            </li>
+                        `;
+                    });
+                    ebooksHtml += '</ul>';
+                }
+                ebooksContainer.innerHTML = ebooksHtml;
+            } else if (result.STATE === 0 && result.ERROR) {
+                ebooksContainer.innerHTML = `<p>Erro ao buscar eBooks: ${result.ERROR}</p>`;
+            } else {
+                ebooksContainer.innerHTML = '<p>Erro inesperado ao buscar eBooks.</p>';
+                console.error('Resposta inesperada da API de eBooks:', result);
+            }
+        } catch (error) {
+            ebooksContainer.innerHTML = `<p>Falha ao conectar com a API de eBooks: ${error.message}</p>`;
+            console.error('Erro na chamada da API de eBooks:', error);
+        }
+    }
+
+    // Função para mostrar/ocultar a seção admin
+    function toggleAdminSection() {
+         const isHidden = adminSection.style.display === 'none';
+         adminSection.style.display = isHidden ? 'block' : 'none';
+         if (isHidden) {
+            // Rola para a seção admin quando ela é exibida
+            adminSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+         }
+    }
+
+    // Função para buscar e exibir Meus Cursos (agora usa get-inprogress)
+    async function fetchAndDisplayMyCourses() {
+        if (!loggedInUserId || !loggedInUserToken) {
+            myCoursesContainer.innerHTML = '<p>Erro: Usuário não logado.</p>';
+            myCoursesSection.style.display = 'block';
+            // Rola para a seção mesmo em caso de erro (para mostrar a mensagem)
+            myCoursesSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            return;
+        }
+        myCoursesContainer.innerHTML = '<p>Carregando seus cursos em andamento...</p>';
+        myCoursesSection.style.display = 'block';
+        // Rola para a seção Meus Cursos quando ela é exibida
+        myCoursesSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+        const formData = new FormData();
+        formData.append('token', apiToken);
+        formData.append('user_id', loggedInUserId);
+        formData.append('user_token', loggedInUserToken); // Enviando user_token por segurança
+
+        try {
+            const response = await fetch(courseInProgressApiUrl, { method: 'POST', body: formData }); // Usando nova URL
+            if (!response.ok) throw new Error(`Erro HTTP: ${response.status}`);
+            const result = await response.json();
+
+            // Verifica se a resposta contém o array COURSES
+            if (result.STATE === 1 && result.COURSES) {
+                let coursesHtml = '';
+                if (result.COURSES.length === 0) {
+                    coursesHtml = '<p>Nenhum curso em andamento encontrado.</p>';
+                } else {
+                    coursesHtml += '<ul>';
+                    result.COURSES.forEach(course => {
+                        // A resposta de get-inprogress já tem mais detalhes
+                        const progress = course.course_user?.user_course_completed; // Pega progresso de dentro do objeto course_user
+                        coursesHtml += `
+                            <li class="course-item" data-course-id="${course.course_id}" style="cursor: pointer; margin-bottom: 5px; padding: 5px; border-bottom: 1px solid #eee;">
+                                <strong>${course.course_title || 'Curso sem título'}</strong>
+                                ${progress !== undefined ? `<span style="margin-left: 10px;">(${progress}% concluído)</span>` : ''}
+                            </li>
+                        `;
+                    });
+                    coursesHtml += '</ul>';
+                }
+                myCoursesContainer.innerHTML = coursesHtml;
+            } else if (result.STATE === 0 && result.ERROR) {
+                myCoursesContainer.innerHTML = `<p>Erro ao buscar cursos: ${result.ERROR}</p>`;
+            } else {
+                myCoursesContainer.innerHTML = '<p>Erro inesperado ao buscar cursos (resposta inválida).</p>';
+                console.error('Resposta inesperada da API get-inprogress:', result);
+            }
+        } catch (error) {
+            myCoursesContainer.innerHTML = `<p>Falha ao conectar com a API de cursos: ${error.message}</p>`;
+            console.error('Erro na chamada da API get-inprogress:', error);
+        }
+    }
+
+    // Função para carregar o ambiente do curso
+    async function loadCourseEnvironment(courseId) {
+        if (!loggedInUserId || !loggedInUserToken) {
+            coursePlayerContainer.innerHTML = '<p style="color: white; padding: 20px;">Erro: Usuário não logado.</p>';
+            coursePlayerContainer.style.display = 'block';
+            return;
+        }
+        // Encontra o botão fechar ANTES de limpar
+        const closeButton = coursePlayerContainer.querySelector('#closeCoursePlayerButton');
+        coursePlayerContainer.innerHTML = ''; // Limpa container
+        if (closeButton) {
+             // Remove estilos inline que agora estão no CSS
+             closeButton.style.backgroundColor = '';
+             closeButton.style.color = '';
+             closeButton.style.border = '';
+             closeButton.style.padding = '';
+             closeButton.style.fontSize = '';
+             closeButton.style.borderRadius = '';
+             // Mantém os essenciais
+             // closeButton.style.position = 'absolute'; 
+             // closeButton.style.top = '5px'; 
+             // closeButton.style.right = '5px'; 
+             // closeButton.style.zIndex = '1001'; 
+             // closeButton.style.cursor = 'pointer';
+             coursePlayerContainer.appendChild(closeButton); // Readiciona o botão
+        }
+        
+        const loadingMessage = document.createElement('p');
+        loadingMessage.textContent = 'Carregando ambiente do curso...';
+        loadingMessage.style.color = 'white';
+        loadingMessage.style.padding = '20px';
+        coursePlayerContainer.appendChild(loadingMessage);
+
+        coursePlayerContainer.style.display = 'block';
+        coursePlayerContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+        const formData = new FormData();
+        formData.append('token', apiToken);
+        formData.append('user_id', loggedInUserId);
+        formData.append('user_token', loggedInUserToken);
+        formData.append('course_id', courseId);
+        formData.append('course_layout', '2'); // Layout padrão
+        formData.append('course_activities', '1'); // ADICIONADO: Parâmetro obrigatório (1 = Ativar)
+
+        try {
+            const response = await fetch(courseEnvApiUrl, { method: 'POST', body: formData });
+            if (!response.ok) throw new Error(`Erro HTTP: ${response.status}`);
+            const result = await response.json();
+            
+            // Remove mensagem de carregamento
+            if(loadingMessage) loadingMessage.remove();
+
+            if (result.STATE === 1 && result.ENVIRONMENT && result.ENVIRONMENT.course_iframe_url) {
+                // Cria e adiciona o iframe dinamicamente
+                const iframe = document.createElement('iframe');
+                iframe.src = result.ENVIRONMENT.course_iframe_url;
+                iframe.style.width = '100%';
+                iframe.style.height = '100%';
+                iframe.style.border = 'none';
+                iframe.allowFullscreen = true;
+                iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+                coursePlayerContainer.appendChild(iframe);
+
+            } else if (result.STATE === 0 && result.ERROR) {
+                const errorMessage = document.createElement('p');
+                errorMessage.textContent = `Erro ao carregar curso: ${result.ERROR}`;
+                errorMessage.style.color = 'white';
+                errorMessage.style.padding = '20px';
+                coursePlayerContainer.appendChild(errorMessage);
+            } else {
+                const errorMessage = document.createElement('p');
+                errorMessage.textContent = 'Erro inesperado ao carregar curso.';
+                errorMessage.style.color = 'white';
+                errorMessage.style.padding = '20px';
+                coursePlayerContainer.appendChild(errorMessage);
+                console.error('Resposta inesperada da API course environment:', result);
+            }
+        } catch (error) {
+            // Remove mensagem de carregamento em caso de erro de fetch
+            if(loadingMessage) loadingMessage.remove();
+            const errorMessage = document.createElement('p');
+            errorMessage.textContent = `Falha ao conectar com a API do curso: ${error.message}`;
+            errorMessage.style.color = 'white';
+            errorMessage.style.padding = '20px';
+            coursePlayerContainer.appendChild(errorMessage);
+            console.error('Erro na chamada da API course environment:', error);
+        }
+    }
+
+    // Verifica se todos os elementos necessários existem
+    const trailCourseSearchInput = document.getElementById('trailCourseSearchInput');
+    if (loginForm && emailInput && passwordInput && adminButton && adminSection && gearIcon && fetchTrailsButton && trailsContainer && createTrailButton && createTrailFormContainer && newTrailTitleInput && newTrailCoursesInput && saveTrailButton && fetchEbooksButton && ebooksContainer && refreshAdminButton && myCoursesButton && myCoursesSection && myCoursesContainer && coursePlayerContainer && loginCardDiv && closeCoursePlayerButton && trailCourseSearchInput && trailSearchContainer) {
+        // Listener do Login
+        loginForm.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const userEmail = emailInput.value;
+            const userPassword = passwordInput.value;
+            const loginFormData = new FormData();
+            loginFormData.append('token', apiToken);
+            loginFormData.append('user_email', userEmail);
+            loginFormData.append('user_password', userPassword);
+
+            try {
+                const response = await fetch(loginApiUrl, {
+                    method: 'POST',
+                    body: loginFormData
+                });
+                if (!response.ok) throw new Error(`Erro HTTP: ${response.status}`);
+                const result = await response.json();
+                if (result.STATE === 1 && result.URL && result.USER_ID && result.USER_TOKEN) {
+                    loggedInUserId = result.USER_ID;
+                    loggedInUserToken = result.USER_TOKEN;
+                    // window.open(result.URL, '_blank'); // Não abre mais AVA automaticamente
+
+                    // Esconde forms, mostra botão Meus Cursos
+                    loginForm.style.display = 'none';
+                    if (loginCardDiv) loginCardDiv.style.display = 'none';
+                    myCoursesButton.style.display = 'inline-block';
+
+                    // Mostra controles admin SE autorizado
+                    const loggedInEmailNormalized = userEmail.trim().toLowerCase();
+                    if (authorizedAdminEmails.includes(loggedInEmailNormalized)) {
+                        adminButton.style.display = 'inline-block';
+                        gearIcon.style.display = 'inline-block';
+                    } else {
+                        adminButton.style.display = 'none';
+                        gearIcon.style.display = 'none';
+                    }
+                } else if (result.STATE === 0 && result.ERROR) {
+                    alert(`Erro: ${result.ERROR}`);
+                } else {
+                    alert('Erro inesperado ao tentar fazer login ou dados faltando na resposta (USER_ID/USER_TOKEN).');
+                    console.error('Resposta inesperada da API de login:', result);
+                }
+            } catch (error) {
+                alert(`Falha ao conectar com a API de login: ${error.message}`);
+                console.error('Erro na chamada da API de login:', error);
+            }
+        });
+
+        // Listener do botão Admin (usa função toggle)
+        adminButton.addEventListener('click', toggleAdminSection);
+
+        // Listener do ÍCONE Engrenagem (usa a MESMA função toggle)
+        gearIcon.addEventListener('click', toggleAdminSection);
+
+        // Listener do botão Obter Trilhas (agora esconde/mostra busca)
+        fetchTrailsButton.addEventListener('click', () => {
+            if (trailsContainer.style.display === 'block' && trailCourseSearchInput.value === '') {
+                trailsContainer.style.display = 'none';
+                trailSearchContainer.style.display = 'none'; // Esconde busca junto
+                currentTrailsData = []; 
+            } else {
+                fetchAndDisplayTrails(); 
+                // Não precisa mostrar a busca aqui, fetchAndDisplayTrails faz isso
+            }
+        });
+
+        // Listener do botão Criar Trilha (já toggle)
+        createTrailButton.addEventListener('click', () => {
+             const formWasHidden = createTrailFormContainer.style.display === 'none';
+             createTrailFormContainer.style.display = formWasHidden ? 'block' : 'none';
+             if (formWasHidden) {
+                 // Rola para o formulário quando ele é exibido
+                 createTrailFormContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+             }
+        });
+
+        // Listener do botão Salvar Trilha
+        saveTrailButton.addEventListener('click', createTrail);
+
+        // Listener do botão Obter eBooks (agora toggle)
+        fetchEbooksButton.addEventListener('click', () => {
+            if (ebooksContainer.style.display === 'block') {
+                ebooksContainer.style.display = 'none';
+            } else {
+                fetchAndDisplayEbooks(); // Chama a função que eventualmente mostra o container
+                // Rola para o container após iniciar a busca e centraliza
+                ebooksContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        });
+
+        // Listener do botão Atualizar
+        refreshAdminButton.addEventListener('click', () => {
+            console.log('Atualizando dados admin...');
+            // Verifica se as trilhas já foram carregadas (não é o estado inicial/erro/carregando)
+            if (trailsContainer.innerHTML && !trailsContainer.innerHTML.includes('<p>Carregando') && !trailsContainer.innerHTML.includes('<p>Erro:')) {
+                console.log('Recarregando trilhas...');
+                fetchAndDisplayTrails();
+            }
+            // Verifica se os eBooks já foram carregados
+            if (ebooksContainer.innerHTML && !ebooksContainer.innerHTML.includes('<p>Carregando') && !ebooksContainer.innerHTML.includes('<p>Erro:')) {
+                console.log('Recarregando eBooks...');
+                fetchAndDisplayEbooks();
+            }
+        });
+
+        // Listener delegado para expandir/recolher detalhes da trilha E CLICAR EM CURSOS
+        trailsContainer.addEventListener('click', (event) => {
+            const detailsHeader = event.target.closest('.toggle-details');
+            const courseItem = event.target.closest('.course-item');
+
+            if (detailsHeader) { // Clicou no header da trilha
+                const trailId = detailsHeader.dataset.trailId;
+                const detailsDiv = document.getElementById(`details-${trailId}`);
+                const iconSpan = detailsHeader.querySelector('.toggle-icon');
+                if (detailsDiv && iconSpan) {
+                    const isHidden = detailsDiv.style.display === 'none';
+                    detailsDiv.style.display = isHidden ? 'block' : 'none';
+                    iconSpan.textContent = isHidden ? '▲' : '▼';
+                }
+            } else if (courseItem && courseItem.dataset.courseId) { // Clicou em um item de curso
+                loadCourseEnvironment(courseItem.dataset.courseId);
+            }
+        });
+
+        // Listener do botão Meus Cursos (toggle)
+        myCoursesButton.addEventListener('click', () => {
+            if (myCoursesSection.style.display === 'block') {
+                myCoursesSection.style.display = 'none';
+                coursePlayerContainer.style.display = 'none'; // Esconde player tbm se fechar a lista
+            } else {
+                fetchAndDisplayMyCourses(); // Busca e mostra a seção
+            }
+        });
+
+        // Listener delegado para cliques nos itens de curso
+        myCoursesContainer.addEventListener('click', (event) => {
+            const courseItem = event.target.closest('.course-item');
+            if (courseItem && courseItem.dataset.courseId) {
+                loadCourseEnvironment(courseItem.dataset.courseId);
+            }
+        });
+
+        // Listener do botão Fechar Player
+        closeCoursePlayerButton.addEventListener('click', () => {
+            coursePlayerContainer.style.display = 'none';
+            // Remove apenas o iframe, se existir, para parar a execução
+            const iframe = coursePlayerContainer.querySelector('iframe');
+            if (iframe) {
+                iframe.remove();
+            }
+        });
+
+        // Listener para o Input de Busca de Curso em Trilhas
+        trailCourseSearchInput.addEventListener('input', () => {
+            const searchTerm = trailCourseSearchInput.value.trim().toLowerCase();
+
+            if (!searchTerm) {
+                renderTrails(currentTrailsData); // Mostra todas se busca vazia
+                return;
+            }
+
+            if (!currentTrailsData || currentTrailsData.length === 0) {
+                 renderTrails([]); // Não há dados para filtrar
+                 return;
+            }
+
+            const filteredTrails = currentTrailsData.filter(trail => {
+                // Verifica se a trilha tem cursos e se algum curso corresponde
+                return trail.trail_courses && trail.trail_courses.some(course => 
+                    course.course_title && course.course_title.toLowerCase().includes(searchTerm)
+                );
+            });
+
+            renderTrails(filteredTrails);
+        });
+
+    } else {
+        console.error('Erro: Não foi possível encontrar um ou mais elementos necessários (formulário/admin/trilhas/criação/ebooks/refresh/gearIcon/myCourses/coursePlayer/closeButton/trailCourseSearchInput/trailSearchContainer).');
+    }
+});
+</script>
+
+</body>
+</html> 
