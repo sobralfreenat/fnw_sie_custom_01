@@ -1,10 +1,11 @@
 
+
 <!doctype html>
 <html>
 <head>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>FNW ASSESSORIA DIGITAL - Universidade Corporativa (Clone)</title>
+	<title>FNW ASSESSORIA DIGITAL - Universidade Corporativa (Clone)v0.1.1</title>
 	<link href="//www.sie.com.br/css/estilo.css?v33" rel="stylesheet" type="text/css" />
 	<link href="//www.sie.com.br/css/fontes/fontface.css" type="text/css" rel="stylesheet"  />
 	<!-- Excluído: jquery.fancybox.css -->
@@ -43,12 +44,12 @@
             padding: 4px 8px;
         }
         #myCoursesButton {
-            background-color: #4CAF50; /* Verde */
+            background-color: #c28a07; /* Verde */
             color: white;
             border: none;
         }
         #myCoursesButton:hover {
-            background-color: #45a049;
+            background-color: #ac8220;
         }
         #closeCoursePlayerButton {
              /* Estilos base definidos aqui */
@@ -85,7 +86,7 @@
              box-shadow: 0 3px 7px rgba(0,0,0,0.2);
              position: relative; 
              margin: 20px auto; /* Centralizado */
-             background-color: #000; /* Fundo preto */
+             background-color: #bc880e; /* Fundo preto */
              width: 1800px !important; /* Forçando largura 1800px */
              max-width: 95% !important; /* Forçando max-width */
              height: 1000px; /* Altura ajustada para 1000px */
@@ -114,16 +115,17 @@
 </head>
 
 <body style="background-image:url(https://www.sie.com.br/admin/_upload/2021/12/24/29220/680177bfb8adc.png);background-size:cover;">
-
 <div id="header">
-	<div class="in" style="position: relative; min-height: 60px;">
-    	<div id="logo" style="margin-right: 10px;">
-        	<a href="https://www.sie.com.br/fnw-assessoria-digital">
-			<img src="https://www.sie.com.br/admin/_upload/2021/12/24/29220/68013566b85ef.png" alt="FNW ASSESSORIA DIGITAL" style="max-height:40px; display: block;" />
+	<div class="in" style="position: fixed; top: -5px; min-height: 0px;">
+    	<div id="logo" style="margin-right: -180px;">
+        	<a href="https://www.admin.husky-app.com/app/MTc0NTA3MTQ0MDQwOQ==/home">
+			<img
+type="logo" ; z-index: 100000;
+style="position: fixed; max-height:40px; display: block" ; src="https://www.sie.com.br/admin/_upload/2021/12/24/29220/68013566b85ef.png" alt="FNW ASSESSORIA DIGITAL"  />
 			</a>
         </div>
         <!-- Ícone de Engrenagem Admin (Absoluto, oculto) -->
-        <span id="gearIcon" style="position: absolute; top: 25px; left: -60px; display: none; font-size: 1.5em; cursor: pointer;">⚙️</span>
+        <span id="gearIcon" style="position: fixed; top: 20px; left: -60px; display: none; font-size: 1.5em; cursor: pointer;">⚙️</span>
 
         <div id="login">
             <div id="login-enter">
@@ -157,12 +159,12 @@
 					</form>
 				</div>
 				<!-- Botão Meus Cursos (agora estilizado via CSS) -->
-				<button id="myCoursesButton" type="button" style="display: none; margin-left: 10px;">Meus Cursos</button>
+				<button id="myCoursesButton" type="button" style="position: fixed; top: 20px; margin-left: 70px; display: none">Conteúdos</button>
 			</div>
 		</div>
 
 		<!-- Botão Admin (agora parcialmente estilizado via CSS) -->
-		<button id="adminButton" type="button" style="position: absolute; top: 35px; right: -30px; display: none; cursor:pointer; padding: 4px 4px;">Admin</button>
+		<button id="adminButton" type="button" style="position: fixed; top: 20px; margin-left: 480px; display: none; cursor:pointer; padding: 6px 15px;">Admin</button>
 
 	</div>
 </div>
@@ -176,7 +178,7 @@
 </div>
 
 <!-- Seção Player do Curso (agora estilizada via CSS) -->
-<div id="coursePlayerContainer" style="display: none; padding: 0; margin: 20px auto; background-color: #000; max-width: 90%; width: 900px; height: 600px;">
+<div id="coursePlayerContainer" style="display: none; padding: 0; margin: 20px auto; background-color: darkgray; max-width: 90%; width: 900px; height: 600px;">
     <button id="closeCoursePlayerButton" style="position: absolute; top: 5px; right: 5px; z-index: 10; cursor: pointer; ">X</button>
     <!-- Iframe do curso será carregado aqui -->
 </div>
